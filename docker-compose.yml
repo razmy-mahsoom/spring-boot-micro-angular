@@ -1,3 +1,35 @@
 services:
+#  Angular Front-End Application --> run container from Dockerfile
   frontend:
     container_name: front-end
+    build:
+      context: angular-frontend
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    networks:
+      - microservice-network
+#  MySQL database for the microservices
+  database:
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    volumes:
+      - database:/var/lib/mysql
+
+volumes:
+  database:
+
+networks:
+  microservice-network:
+    driver: bridge
+
+
