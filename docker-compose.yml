@@ -9,9 +9,11 @@ services:
       - 80:80
     networks:
       - microservice-network
+
 #  MySQL database for the microservices
   database:
     image: mysql:latest
+    container_name: database
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: 'db'
@@ -25,9 +27,26 @@ services:
     volumes:
       - database:/var/lib/mysql
 
+
+#phpMyAdmin UI for MySQL Database
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - database
+    environment:
+      PMA_HOST: database
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8081:80
+
+#Volumes for the containers
 volumes:
   database:
 
+#Networks for the containers
 networks:
   microservice-network:
     driver: bridge

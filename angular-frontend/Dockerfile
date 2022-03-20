@@ -1,4 +1,5 @@
 FROM node:latest as node
+MAINTAINER:razmymahsoom
 WORKDIR /app
 COPY . .
 RUN npm install
