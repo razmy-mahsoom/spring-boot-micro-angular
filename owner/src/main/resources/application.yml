@@ -1,0 +1,17 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: owner
+  datasource:
+    password: password
+    url: jdbc:mysql://localhost:3306/owner
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+    show-sql: true
