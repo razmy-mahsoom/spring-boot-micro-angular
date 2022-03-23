@@ -16,7 +16,7 @@ services:
     container_name: database
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: 'db'
+      MYSQL_DATABASE: 'owner'
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
@@ -41,10 +41,42 @@ services:
     restart: always
     ports:
       - 8081:80
+#Postgres For Keycloack
+  postgres:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+
+  keycloack:
+    build:
+      context: .
+      dockerfile: KeycloackDockerfile
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_SCHEMA: public
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+
+
+
 
 #Volumes for the containers
 volumes:
   database:
+  postgres_data:
+    driver: local
 
 #Networks for the containers
 networks:
