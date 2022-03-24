@@ -36,7 +36,15 @@ export class AppComponent {
     this.oAuthService.logOut();
   }
 
-  getName(): string{
-    return this.oAuthService.getIdToken();
+  getName(){
+    //return this.oAuthService.getAccessToken();
+    const token = this.oAuthService.getAccessToken();
+    const payload = token.split('.')[1];
+    const payloadDecodedJson = atob(payload);
+    const payloadDecoded = JSON.parse(payloadDecodedJson);
+    //return payloadDecoded.realm_access.roles;
+    console.log(payloadDecoded.realm_access.roles)
+    return payloadDecoded.given_name
+
   }
 }

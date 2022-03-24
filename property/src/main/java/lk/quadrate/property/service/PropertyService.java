@@ -40,7 +40,8 @@ public class PropertyService {
 
     public void saveProperty(PropertyModel propertyModel){
         Optional<PropertyType> propertyType = Optional.ofNullable(typeRepository
-                .findById(propertyModel.getPropertyTypeId()).orElseThrow(() -> {
+                .findById(propertyModel.getPropertyTypeId())
+                .orElseThrow(() -> {
                     throw new PropertyTypeNotFoundException("Property Type" + propertyModel.getPropertyTypeId() + "Not Found");
                 }));
 
