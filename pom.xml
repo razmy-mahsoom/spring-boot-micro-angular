@@ -22,6 +22,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <sprig.boot.dependencies.version>2.6.4</sprig.boot.dependencies.version>
         <spring.cloud-version>2021.0.1</spring.cloud-version>
+        <keycloak-adopter-version>15.0.2</keycloak-adopter-version>
     </properties>
 
     <dependencyManagement>
@@ -37,6 +38,13 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring.cloud-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.keycloak.bom</groupId>
+                <artifactId>keycloak-adapter-bom</artifactId>
+                <version>${keycloak-adopter-version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

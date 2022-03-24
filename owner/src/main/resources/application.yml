@@ -22,3 +22,12 @@ eureka:
       defaultZone: http://localhost:8761/eureka
     fetch-registry: true
     register-with-eureka: true
+
+keycloak:
+  realm: spring-boot-angular
+  auth-server-url: http://localhost:8080/auth
+  resource: owner-service
+  public-client: true
+  bearer-only: true
+
+

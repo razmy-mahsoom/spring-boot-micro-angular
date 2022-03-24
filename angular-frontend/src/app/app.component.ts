@@ -26,6 +26,7 @@ export class AppComponent {
     this.oAuthService.tokenValidationHandler = new NullValidationHandler();
     this.oAuthService.setupAutomaticSilentRefresh();
     this.oAuthService.loadDiscoveryDocument().then(()=>this.oAuthService.tryLogin());
+
   }
 
   login():void{
@@ -44,7 +45,8 @@ export class AppComponent {
     const payloadDecoded = JSON.parse(payloadDecodedJson);
     //return payloadDecoded.realm_access.roles;
     console.log(payloadDecoded.realm_access.roles)
-    return payloadDecoded.given_name
+    //return payloadDecoded.name
+    return this.authCodeFlowConfig.redirectUri;
 
   }
 }
