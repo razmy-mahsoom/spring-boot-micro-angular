@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface OwnerRepository extends JpaRepository<Owner,Long> {
     @Query("SELECT o FROM Owner o WHERE o.id=?1")
     Optional<Owner> findById(Long ownerId);
+    @Query("SELECT o FROM Owner o WHERE o.userId=?1")
+    Optional<Owner> findOwnerByUserId(String userId);
 }

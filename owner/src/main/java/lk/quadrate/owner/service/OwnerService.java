@@ -4,14 +4,19 @@ import lk.quadrate.clients.owner.OwnerClientResponse;
 import lk.quadrate.owner.entity.Owner;
 import lk.quadrate.owner.exception.OwnerExistException;
 import lk.quadrate.owner.exception.OwnerNotFountException;
+import lk.quadrate.owner.model.OwnerModel;
 import lk.quadrate.owner.repository.OwnerRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -19,8 +24,26 @@ import java.util.Optional;
 @Slf4j
 public class OwnerService {
     private final OwnerRepository repository;
+    private final ModelMapper modelMapper;
 
-    public void saveOwner(Owner owner){
+    public void saveOwner(OwnerModel ownerModel){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Owner owner = Owner.builder()
+                .userId(authentication.getName())
+                .firstName(ownerModel.getFirstName())
+                .lastName(ownerModel.getLastName())
+                .gender(ownerModel.getGender())
+                .governmentId(ownerModel.getGovernmentId())
+                .countryCode(ownerModel.getCountryCode())
+                .contactNumber(ownerModel.getContactNumber())
+                .address(ownerModel.getAddress())
+                .city(ownerModel.getCity())
+                .country(ownerModel.getCountry())
+                .postalCode(ownerModel.getPostalCode())
+                //.dateOfBirth(ownerModel.getDateOfBirth())
+                .createdAt(LocalDateTime.now())
+                .isProfileCompleted(true)
+                .build();
         try {
            repository.save(owner);
         }catch (DataIntegrityViolationException e){
@@ -33,5 +56,16 @@ public class OwnerService {
         return repository.findById(ownerId).orElseThrow(()->{
             throw new OwnerNotFountException("Owner With ID: "+ownerId+" Not Found");
         });
+    }
+
+    public Owner getOwnerByUserId(String userId){
+        return repository.findOwnerByUserId(userId)
+                .orElseThrow(()->{
+                    throw new OwnerNotFountException("Owner With UserID: "+userId+" Not Found");
+                });
+    }
+
+    public int calculate(int x , int y){
+        return x+y;
     }
 }

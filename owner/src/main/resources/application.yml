@@ -27,7 +27,9 @@ keycloak:
   realm: spring-boot-angular
   auth-server-url: http://localhost:8080/auth
   resource: owner-service
-  public-client: true
+#  public-client: true
   bearer-only: true
+  credentials:
+    secret: RYuf3uaFnHJTbbDzPlOlmAdZnhtE1mEW
 
 

@@ -1,20 +1,22 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthConfig, NullValidationHandler, OAuthService} from "angular-oauth2-oidc";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
-  constructor(private oAuthService:OAuthService) {
+  constructor(private oAuthService:OAuthService,private http:HttpClient,private router:Router) {
     this.configure();
   }
   authCodeFlowConfig: AuthConfig = {
     // Url of the Identity Provider
     issuer: 'http://localhost:8080/auth/realms/spring-boot-angular',
-    redirectUri: window.location.origin,
+    redirectUri: window.location.origin+'/dashboard',
     clientId: 'front-end',
     responseType: 'code',
     scope: 'openid profile email offline_access ',
@@ -28,25 +30,23 @@ export class AppComponent {
     this.oAuthService.loadDiscoveryDocument().then(()=>this.oAuthService.tryLogin());
 
   }
+  ngOnInit() {
+
+  }
 
   login():void{
-
-    this.oAuthService.initImplicitFlowInternal();
+    if(this.oAuthService.hasValidAccessToken()){
+      console.log('Has Valid token')
+    }else{
+      this.oAuthService.initImplicitFlowInternal();
+    }
   }
   logout():void{
     this.oAuthService.logOut();
   }
 
   getName(){
-    //return this.oAuthService.getAccessToken();
-    const token = this.oAuthService.getAccessToken();
-    const payload = token.split('.')[1];
-    const payloadDecodedJson = atob(payload);
-    const payloadDecoded = JSON.parse(payloadDecodedJson);
-    //return payloadDecoded.realm_access.roles;
-    console.log(payloadDecoded.realm_access.roles)
-    //return payloadDecoded.name
-    return this.authCodeFlowConfig.redirectUri;
+    return this.oAuthService.getAccessToken();
 
   }
 }
