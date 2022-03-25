@@ -22,3 +22,4 @@ public class RoomController {
         service.saveRoom(roomRequestModel)
     }
 }
+
