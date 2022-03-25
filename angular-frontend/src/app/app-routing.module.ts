@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {DashBoardComponent} from "./dash-board/dash-board.component";
 
 const routes: Routes = [
-  {path:'dashboard',component:DashBoardComponent}
+  {path:'',component:DashBoardComponent}
 ];
 
 @NgModule({
