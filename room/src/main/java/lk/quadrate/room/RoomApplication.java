@@ -20,9 +20,7 @@ import java.util.Optional;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableFeignClients(
-        basePackages = "lk.quadrate.clients"
-)
+
 @Slf4j
 public class RoomApplication {
     public static void main(String[] args) {

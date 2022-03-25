@@ -18,10 +18,8 @@ public class RoomService {
         return repository.findAllRoomByPropertyId(propertyId);
     }
 
-    public Room saveRoom(RoomRequestModel roomRequestModel){
-        Room room = Room.builder()
+    public Room saveRoom(Room room){
 
-                .build();
         return repository.save(room);
     }
 }
