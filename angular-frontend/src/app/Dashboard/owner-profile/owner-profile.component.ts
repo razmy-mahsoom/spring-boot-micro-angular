@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {OwnerProfileService} from "../Service/owner-profile.service";
+import {Owner} from "../Models/owner";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-owner-profile',
@@ -6,10 +9,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./owner-profile.component.css']
 })
 export class OwnerProfileComponent implements OnInit {
-
-  constructor() { }
+  owner$:Observable<Owner> = new Observable<Owner>();
+  constructor(private profileService:OwnerProfileService) {}
 
   ngOnInit(): void {
+    this.owner$ = this.profileService.fetchOwnerByAuthentication()
   }
 
 }

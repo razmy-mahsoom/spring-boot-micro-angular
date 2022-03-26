@@ -3,13 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {OAuthModule} from "angular-oauth2-oidc";
 import { DashBoardComponent } from './Dashboard/dash-board/dash-board.component';
 import { DashboardHeaderComponent } from './Dashboard/dashboard-header/dashboard-header.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { OwnerProfileComponent } from './Dashboard/owner-profile/owner-profile.component';
 import { OwnerPropertiesComponent } from './Dashboard/owner-properties/owner-properties.component';
+import {AccessTokenInterceptor} from "./Utils/access-token.interceptor";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,9 @@ import { OwnerPropertiesComponent } from './Dashboard/owner-properties/owner-pro
     HttpClientModule,
     OAuthModule.forRoot()
   ],
-  providers: [],
+  providers: [
+     {provide:HTTP_INTERCEPTORS,useClass:AccessTokenInterceptor,multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

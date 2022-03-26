@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class OwnerClientResponse{
-    Long id;
+    private Long id;
     private String userId;
     private String firstName;
     private String lastName;

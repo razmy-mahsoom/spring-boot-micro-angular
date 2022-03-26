@@ -6,6 +6,7 @@ import lk.quadrate.owner.entity.Owner;
 import lk.quadrate.owner.model.OwnerModel;
 import lk.quadrate.owner.service.OwnerService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpRequest;
@@ -23,6 +24,7 @@ import java.security.Principal;
 @RequestMapping("api/v1/owner")
 @CrossOrigin(origins = "http://localhost:4200/")
 @AllArgsConstructor
+@Slf4j
 public class OwnerController {
 
     private final OwnerService service;
@@ -36,15 +38,27 @@ public class OwnerController {
     }
 
     @GetMapping(path = "{ownerId}")
+    @PreAuthorize("hasRole('owner')")
     OwnerClientResponse getOwnerById(@PathVariable("ownerId") Long ownerId){
         Owner owner = service.getOwnerById(ownerId);
         OwnerClientResponse ownerClientResponse = modelMapper.map(owner,OwnerClientResponse.class);
         return ownerClientResponse;
     }
     @GetMapping(path = "/user/{userId}")
+    @PreAuthorize("hasRole('owner')")
     OwnerClientResponse getOwnerByUserId(@PathVariable("userId") String userId){
         Owner owner = service.getOwnerByUserId(userId);
         OwnerClientResponse ownerClientResponse = modelMapper.map(owner,OwnerClientResponse.class);
+        return ownerClientResponse;
+    }
+
+    @GetMapping(path = "/authentication")
+    OwnerClientResponse getOwnerByAuthentication(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        Owner owner = service.getOwnerByUserId(userId);
+        OwnerClientResponse ownerClientResponse = modelMapper.map(owner,OwnerClientResponse.class);
+        log.info("User ID :{}",userId);
         return ownerClientResponse;
     }
 

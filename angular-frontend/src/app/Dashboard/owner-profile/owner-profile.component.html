@@ -2,15 +2,18 @@
 <div class="container">
   <div class="row">
 
-      <div class="card">
-        <div >
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item custom-txt-color">First Name</li>
-            <li class="list-group-item custom-txt-color">Last Name</li>
-            <li class="list-group-item custom-txt-color">Address</li>
-          </ul>
+
+        <div class="card">
+          <div >
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item custom-txt-color">UUID : {{(owner$ | async)?.userId }}</li>
+              <li class="list-group-item custom-txt-color">First Name : {{(owner$ | async)?.firstName }}</li>
+              <li class="list-group-item custom-txt-color">Last Name : {{(owner$ | async)?.lastName}}</li>
+              <li class="list-group-item custom-txt-color">Address : {{(owner$|async)?.address}}</li>
+            </ul>
+          </div>
         </div>
-      </div>
+
 
   </div>
 </div>

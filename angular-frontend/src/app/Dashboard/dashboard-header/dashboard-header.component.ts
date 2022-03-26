@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {faBell, faCoffee} from "@fortawesome/free-solid-svg-icons";
+import {OAuthService} from "angular-oauth2-oidc";
 
 @Component({
   selector: 'app-dashboard-header',
@@ -8,9 +9,12 @@ import {faBell, faCoffee} from "@fortawesome/free-solid-svg-icons";
 })
 export class DashboardHeaderComponent implements OnInit {
   notification = faBell;
-  constructor() { }
+  constructor(private oAuthService:OAuthService) { }
 
   ngOnInit(): void {
   }
 
+  login() {
+    this.oAuthService.initImplicitFlowInternal();
+  }
 }

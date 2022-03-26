@@ -16,7 +16,7 @@ export class AppComponent implements OnInit{
   authCodeFlowConfig: AuthConfig = {
     // Url of the Identity Provider
     issuer: 'http://localhost:8080/auth/realms/spring-boot-angular',
-    redirectUri: window.location.origin+'/dashboard',
+    redirectUri: window.location.origin,
     clientId: 'front-end',
     responseType: 'code',
     scope: 'openid profile email offline_access ',
