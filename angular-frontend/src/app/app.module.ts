@@ -5,15 +5,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {OAuthModule} from "angular-oauth2-oidc";
-import { DashBoardComponent } from './dash-board/dash-board.component';
-import { DashboardHeaderComponent } from './dash-board/dashboard-header/dashboard-header.component';
+import { DashBoardComponent } from './Dashboard/dash-board/dash-board.component';
+import { DashboardHeaderComponent } from './Dashboard/dashboard-header/dashboard-header.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import { OwnerProfileComponent } from './Dashboard/owner-profile/owner-profile.component';
+import { OwnerPropertiesComponent } from './Dashboard/owner-properties/owner-properties.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashBoardComponent,
-    DashboardHeaderComponent
+    DashboardHeaderComponent,
+    OwnerProfileComponent,
+    OwnerPropertiesComponent
   ],
   imports: [
     BrowserModule,

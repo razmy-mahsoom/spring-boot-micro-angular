@@ -1,0 +1,43 @@
+<!--<nav class="navbar sticky-top navbar-light bg-light ">-->
+<!--  <a class="navbar-brand" routerLink="/properties">Navbar</a>-->
+<!--  <div class="dropdown">-->
+<!--    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--      Dropdown button-->
+<!--    </button>-->
+<!--    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">-->
+<!--      <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>-->
+<!--      <li><a class="dropdown-item" routerLink="/properties">Properties</a></li>-->
+<!--      <li><a class="dropdown-item" href="#">Logout</a></li>-->
+<!--    </ul>-->
+<!--  </div>-->
+<!--</nav>-->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar scroll</a>
+
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+      </ul>
+      <li class="nav-item dropdown d-flex">
+        <fa-icon [icon]="notification" size="1x" [styles]="{'color':'green'}"></fa-icon>
+      </li>
+      <li class="nav-item dropdown d-flex">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          MOHAMED
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+          <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
+          <li><a class="dropdown-item" routerLink="/properties">Properties</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Logout</a></li>
+        </ul>
+      </li>
+<!--      <form class="d-flex">-->
+<!--        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--        <button class="btn btn-outline-success" type="submit">Search</button>-->
+<!--        <button class="btn btn-outline-danger">Logout</button>-->
+<!--      </form>-->
+    </div>
+  </div>
+</nav>
