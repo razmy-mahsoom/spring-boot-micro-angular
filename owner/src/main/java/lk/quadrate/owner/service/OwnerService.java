@@ -1,6 +1,5 @@
 package lk.quadrate.owner.service;
 
-import lk.quadrate.clients.owner.OwnerClientResponse;
 import lk.quadrate.owner.entity.Owner;
 import lk.quadrate.owner.exception.OwnerExistException;
 import lk.quadrate.owner.exception.OwnerNotFountException;
@@ -13,11 +12,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -26,6 +23,7 @@ public class OwnerService {
     private final OwnerRepository repository;
     private final ModelMapper modelMapper;
 
+    @Transactional
     public void saveOwner(OwnerModel ownerModel){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Owner owner = Owner.builder()
@@ -51,13 +49,13 @@ public class OwnerService {
         }
     }
 
-
+    @Transactional(readOnly = true)
     public Owner getOwnerById(Long ownerId) {
         return repository.findById(ownerId).orElseThrow(()->{
             throw new OwnerNotFountException("Owner With ID: "+ownerId+" Not Found");
         });
     }
-
+    @Transactional(readOnly = true)
     public Owner getOwnerByUserId(String userId){
         return repository.findOwnerByUserId(userId)
                 .orElseThrow(()->{

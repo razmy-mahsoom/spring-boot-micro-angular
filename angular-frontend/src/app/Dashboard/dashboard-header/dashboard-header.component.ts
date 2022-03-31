@@ -17,4 +17,8 @@ export class DashboardHeaderComponent implements OnInit {
   login() {
     this.oAuthService.initImplicitFlowInternal();
   }
+  logout(){
+    this.oAuthService.logOut();
+
+  }
 }

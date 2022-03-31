@@ -21,6 +21,7 @@ export class AppComponent implements OnInit{
     responseType: 'code',
     scope: 'openid profile email offline_access ',
     showDebugInformation: true,
+    loginUrl: window.location.origin
   };
 
   configure():void{
@@ -32,17 +33,6 @@ export class AppComponent implements OnInit{
   }
   ngOnInit() {
 
-  }
-
-  login():void{
-    if(this.oAuthService.hasValidAccessToken()){
-      console.log('Has Valid token')
-    }else{
-      this.oAuthService.initImplicitFlowInternal();
-    }
-  }
-  logout():void{
-    this.oAuthService.logOut();
   }
 
   getName(){
