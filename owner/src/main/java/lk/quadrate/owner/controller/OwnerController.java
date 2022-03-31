@@ -7,6 +7,9 @@ import lk.quadrate.owner.model.OwnerModel;
 import lk.quadrate.owner.service.OwnerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.representations.AccessToken;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpRequest;
@@ -58,6 +61,18 @@ public class OwnerController {
         String userId = authentication.getName();
         Owner owner = service.getOwnerByUserId(userId);
         OwnerClientResponse ownerClientResponse = modelMapper.map(owner,OwnerClientResponse.class);
+
+        //Keycloak Implementation
+        Authentication auth  = SecurityContextHolder.getContext().getAuthentication();
+        KeycloakPrincipal principal = (KeycloakPrincipal) auth.getPrincipal();
+        KeycloakSecurityContext session = principal.getKeycloakSecurityContext();
+        AccessToken token = session.getToken();
+        log.info("Username :{}",token.getPreferredUsername());
+        log.info("Email :{}",token.getEmail());
+        log.info("Last Name :{}",token.getFamilyName());
+        log.info("First Name :{}",token.getGivenName());
+        log.info("realmName :{}",token.getIssuer());
+        log.info("Keycloak UserID :{}",token.getId());
         log.info("User ID :{}",userId);
         return ownerClientResponse;
     }
