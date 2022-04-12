@@ -15,4 +15,5 @@ public class ExceptionResponse {
     private String message;
     private HttpStatus httpStatus;
     private LocalDateTime createdAt;
+    private Object errorObject;
 }

@@ -11,12 +11,14 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.springframework.http.HttpStatus.*;
+
 @ControllerAdvice
 public class CustomExceptionHandler {
 
     @ExceptionHandler(OwnerExistException.class)
-    public ResponseEntity<ExceptionResponse> handleOwnerExistException(OwnerExistException e){
-        HttpStatus status = HttpStatus.CONFLICT;
+    public ResponseEntity<ExceptionResponse> handleOwnerExistException(OwnerExistException e) {
+        HttpStatus status = CONFLICT;
         ExceptionResponse exception = ExceptionResponse.builder()
                 .message(e.getMessage())
                 .httpStatus(status)
@@ -25,8 +27,8 @@ public class CustomExceptionHandler {
     }
 
     @ExceptionHandler(OwnerNotFountException.class)
-    public ResponseEntity<Object> handleOwnerNotFoundException(OwnerNotFountException e){
-        HttpStatus status = HttpStatus.NOT_FOUND;
+    public ResponseEntity<Object> handleOwnerNotFoundException(OwnerNotFountException e) {
+        HttpStatus status = NOT_FOUND;
         ExceptionResponse exception = ExceptionResponse.builder()
                 .message(e.getMessage())
                 .httpStatus(status)
@@ -36,11 +38,17 @@ public class CustomExceptionHandler {
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String,String>> handleValidationException(MethodArgumentNotValidException ex){
+    public ResponseEntity<ExceptionResponse> handleValidationException(MethodArgumentNotValidException ex) {
         Map<String, String> errorMap = new HashMap<>();
-
+        HttpStatus status = BAD_REQUEST;
+        ExceptionResponse exceptionResponse = ExceptionResponse.builder()
+                .createdAt(LocalDateTime.now())
+                .message(ex.getMessage())
+                .httpStatus(status)
+                .errorObject(errorMap)
+                .build();
         ex.getBindingResult().getFieldErrors().stream()
                 .forEach(fieldError -> errorMap.put(fieldError.getField(), fieldError.getDefaultMessage()));
-        return new ResponseEntity<>(errorMap,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exceptionResponse, status);
     }
 }
