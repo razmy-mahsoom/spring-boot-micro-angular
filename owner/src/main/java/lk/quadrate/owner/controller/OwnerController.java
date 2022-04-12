@@ -56,6 +56,7 @@ public class OwnerController {
     }
 
     @GetMapping(path = "/authentication")
+    @PreAuthorize("hasRole('owner')")
     OwnerClientResponse getOwnerByAuthentication(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentication.getName();
