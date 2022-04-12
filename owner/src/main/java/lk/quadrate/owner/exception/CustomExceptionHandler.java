@@ -3,10 +3,13 @@ package lk.quadrate.owner.exception;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @ControllerAdvice
 public class CustomExceptionHandler {
@@ -29,5 +32,15 @@ public class CustomExceptionHandler {
                 .httpStatus(status)
                 .createdAt(LocalDateTime.now()).build();
         return new ResponseEntity<>(exception, status);
+    }
+
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String,String>> handleValidationException(MethodArgumentNotValidException ex){
+        Map<String, String> errorMap = new HashMap<>();
+
+        ex.getBindingResult().getFieldErrors().stream()
+                .forEach(fieldError -> errorMap.put(fieldError.getField(), fieldError.getDefaultMessage()));
+        return new ResponseEntity<>(errorMap,HttpStatus.BAD_REQUEST);
     }
 }

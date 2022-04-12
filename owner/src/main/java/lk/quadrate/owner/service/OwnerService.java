@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
 @Slf4j
 public class OwnerService {
     private final OwnerRepository repository;
-    private final ModelMapper modelMapper;
 
     @Transactional
     public void saveOwner(OwnerModel ownerModel){
