@@ -1,6 +1,5 @@
 package lk.quadrate.owner.exception;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,8 +28,8 @@ public class CustomExceptionHandler {
     }
 
     @ResponseStatus(NOT_FOUND)
-    @ExceptionHandler(OwnerNotFountException.class)
-    public ResponseEntity<Object> handleOwnerNotFoundException(OwnerNotFountException e) {
+    @ExceptionHandler(OwnerNotFoundException.class)
+    public ResponseEntity<Object> handleOwnerNotFoundException(OwnerNotFoundException e) {
         HttpStatus status = NOT_FOUND;
         ExceptionResponse exception = ExceptionResponse.builder()
                 .message(e.getMessage())

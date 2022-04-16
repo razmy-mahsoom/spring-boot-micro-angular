@@ -2,7 +2,7 @@ package lk.quadrate.owner.service;
 
 import lk.quadrate.owner.entity.Owner;
 import lk.quadrate.owner.exception.OwnerExistException;
-import lk.quadrate.owner.exception.OwnerNotFountException;
+import lk.quadrate.owner.exception.OwnerNotFoundException;
 import lk.quadrate.owner.model.OwnerModel;
 import lk.quadrate.owner.repository.OwnerRepository;
 import lombok.AllArgsConstructor;
@@ -53,14 +53,14 @@ public class OwnerService {
     @Transactional(readOnly = true)
     public Owner getOwnerById(Long ownerId) {
         return repository.findById(ownerId).orElseThrow(()->{
-            throw new OwnerNotFountException("Owner With ID: "+ownerId+" Not Found");
+            throw new OwnerNotFoundException("Owner With ID: "+ownerId+" Not Found");
         });
     }
     @Transactional(readOnly = true)
     public Owner getOwnerByUserId(String userId){
         return repository.findOwnerByUserId(userId)
                 .orElseThrow(()->{
-                    throw new OwnerNotFountException("Owner With UserID: "+userId+" Not Found");
+                    throw new OwnerNotFoundException("Owner With UserID: "+userId+" Not Found");
                 });
     }
 
