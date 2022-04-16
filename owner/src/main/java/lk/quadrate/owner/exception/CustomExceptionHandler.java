@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import static org.springframework.http.HttpStatus.*;
 @ControllerAdvice
 public class CustomExceptionHandler {
 
+    @ResponseStatus(CONFLICT)
     @ExceptionHandler(OwnerExistException.class)
     public ResponseEntity<ExceptionResponse> handleOwnerExistException(OwnerExistException e) {
         HttpStatus status = CONFLICT;
@@ -26,6 +28,7 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(exception, status);
     }
 
+    @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(OwnerNotFountException.class)
     public ResponseEntity<Object> handleOwnerNotFoundException(OwnerNotFountException e) {
         HttpStatus status = NOT_FOUND;
@@ -36,7 +39,7 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(exception, status);
     }
 
-
+    @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionResponse> handleValidationException(MethodArgumentNotValidException ex) {
         Map<String, String> errorMap = new HashMap<>();

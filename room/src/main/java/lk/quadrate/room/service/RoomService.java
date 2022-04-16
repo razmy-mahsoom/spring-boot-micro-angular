@@ -1,6 +1,5 @@
 package lk.quadrate.room.service;
 
-import lk.quadrate.clients.owner.room.RoomRequestModel;
 import lk.quadrate.room.entity.Room;
 import lk.quadrate.room.repository.RoomRepository;
 import lombok.AllArgsConstructor;

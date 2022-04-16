@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -24,7 +25,9 @@ public class OwnerModel {
     private String lastName;
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    @NotBlank(message = "Government ID is required")
     private String governmentId;
+    @NotBlank(message = "Please select country code")
     private String countryCode;
     @NotBlank(message = "Contact number is mandatory")
     @Size(min = 10,max = 12,message = "Invalid contact number")
@@ -36,5 +39,6 @@ public class OwnerModel {
     @NotBlank(message = "Country is mandatory")
     private String country;
     private String postalCode;
+    @Past(message = "Date of Birth should be in past")
     private LocalDateTime dateOfBirth;
 }

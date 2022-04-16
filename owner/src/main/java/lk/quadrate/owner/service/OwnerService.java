@@ -21,10 +21,12 @@ import java.time.LocalDateTime;
 @Slf4j
 public class OwnerService {
     private final OwnerRepository repository;
+    private final ModelMapper modelMapper;
 
     @Transactional
     public void saveOwner(OwnerModel ownerModel){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Owner owner1 = modelMapper.map(ownerModel,Owner.class);
         Owner owner = Owner.builder()
                 .userId(authentication.getName())
                 .firstName(ownerModel.getFirstName())
